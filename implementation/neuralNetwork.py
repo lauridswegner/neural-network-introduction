@@ -12,17 +12,12 @@ class neuralNetwork:
 
         # link weight matrices, wih and who
         # weights inside the arrays are w_i_j, where link is from node i to node j in the next layer
-        # w11 w21
-        # w12 w22 etc
         self.wih = (numpy.random.rand(self.hnodes, self.inodes) - 0.5)
-        self.who = (numpy.random.rand(self.onodes, self.hnodes) - 0.5)
-        
+        self.who = (numpy.random.rand(self.onodes, self.hnodes) - 0.5)     
         # learning rate
         self.lr = learningrate
-
         # activation function is the sigmoid function
         self.activation_function = lambda x: scipy.special.expit(x)
-        
         pass
 
     # train the neural network
@@ -70,3 +65,13 @@ class neuralNetwork:
         final_outputs = self.activation_function(final_inputs)
 
         return final_outputs
+    
+    # save weights into file
+    def save_weights(self):
+        numpy.save("wih.npy", self.wih)
+        numpy.save("who.npy", self.who)
+
+    # load weights from file
+    def load_weights(self):
+        self.wih = numpy.load("wih.npy")
+        self.who = numpy.load("who.npy")
