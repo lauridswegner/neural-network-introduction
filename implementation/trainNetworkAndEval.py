@@ -1,5 +1,6 @@
 from neuralNetwork import neuralNetwork
 import numpy
+import time
 
 # number of inputs, hidden, output nodes and learning rate
 input_nodes = 784
@@ -20,6 +21,8 @@ training_data_file.close()
 # epochs is the number of times the training data set is used for training
 epochs = 5
 
+start_time = time.time()
+
 for e in range(epochs):
     print("epoch", e+1, "of", epochs)
     for record in training_data_list:
@@ -33,3 +36,7 @@ for e in range(epochs):
         n.train(inputs, targets)
         pass
     pass
+
+# stopwatch for benchmark-purposes
+end_time = time.time()
+print("Runtime: {:.2f} seconds".format(end_time - start_time))
