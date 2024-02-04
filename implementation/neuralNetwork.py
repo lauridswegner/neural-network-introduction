@@ -1,7 +1,5 @@
 import numpy
 import scipy.special
-import matplotlib.pyplot
-%matplotlib inline
 
 # neural network class definition
 class neuralNetwork:
