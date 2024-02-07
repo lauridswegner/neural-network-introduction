@@ -40,3 +40,6 @@ for e in range(epochs):
 # stopwatch for benchmark-purposes
 end_time = time.time()
 print("Runtime: {:.2f} seconds".format(end_time - start_time))
+
+# save weights in npy-file
+n.save_weights()
