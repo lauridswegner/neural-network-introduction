@@ -9,6 +9,7 @@ class CanvasApp:
         self.canvas = tk.Canvas(root, width=280, height=280, bg="white")
         self.canvas.pack()
         self.image_scale = 10 # Scaling due to difficulties while drawing this shit
+        self.max_pixel_value = 255
         
         # Initialization of drawing area
         self.drawing_area = [[0 for _ in range(28)] for _ in range(28)]
@@ -24,27 +25,42 @@ class CanvasApp:
 
     def paint(self, event):
         x, y = (event.x // self.image_scale), (event.y // self.image_scale)
+        brush_size = 1  # Radius for the intensity effect
 
-        # check if cursor is in the drawing area before initiating the update of the canvas
         if 0 <= x < 28 and 0 <= y < 28:
-            self.drawing_area[y][x] = 1
+            for i in range(-brush_size, brush_size + 1):
+                for j in range(-brush_size, brush_size + 1):
+                    if 0 <= x + i < 28 and 0 <= y + j < 28:
+                        distance = ((i**2 + j**2)**0.5)  # euclidian distance to the center
+                        # reduce intensity based on distance
+                        intensity_reduction = int(distance * 140)
+                        # ensure to stay within bounds
+                        current_intensity = self.drawing_area[y + j][x + i]
+                        new_intensity = max(0, self.max_pixel_value - intensity_reduction)
+                        self.drawing_area[y + j][x + i] = max(current_intensity, new_intensity)
             self.update_canvas()
+
+
     
     def update_canvas(self):
         self.canvas.delete("all")
         for y, row in enumerate(self.drawing_area):
             for x, value in enumerate(row):
-                if value:
-                    self.canvas.create_rectangle(x * self.image_scale, y * self.image_scale,
-                                                 (x + 1) * self.image_scale, (y + 1) * self.image_scale,
-                                                 fill='black', outline='black')
+                intensity = max(0, min(value, 255))
+                hex_intensity = '{:02x}'.format(255 - intensity)
+                color = f'#{hex_intensity}{hex_intensity}{hex_intensity}'
+                self.canvas.create_rectangle(x * self.image_scale, y * self.image_scale,
+                                            (x + 1) * self.image_scale, (y + 1) * self.image_scale,
+                                            fill=color, outline=color)
+
+
 
     def reset_canvas(self):
         self.drawing_area = [[0 for _ in range(28)] for _ in range(28)]
         self.update_canvas()
 
     def guess_digit(self):
-        digit = [value * 255 if value == 1 else value for row in self.drawing_area for value in row]
+        digit = [value for row in self.drawing_area for value in row]
         guess = numpy.argmax(n.query((numpy.asfarray(digit) / 255.0 * 0.99) + 0.01))
         messagebox.showinfo("Guess", guess)
         self.reset_canvas()
