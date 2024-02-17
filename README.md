@@ -18,10 +18,10 @@ This project is my little crappy introduction into neuralNetworks and the use of
 - [x] make neuralNetwork weights storable for use after restart
 - [x] create a canvas for drawing digits
     - [x] make them detectable by the neuralNetworks query, forcing a prediction to be made
-- [ ] increase accuracy
-    - [ ] input data is still not simillar enough to mnist data
-    - [ ] include rotated digits on training-data
-- [ ] make a second script focussing on the training and finetuning of the network
+- [x] increase accuracy
+    - [x] input data is still not simillar enough to mnist data
+    - [x] include rotated digits on training-data
+- [x] make a second script focussing on the training and finetuning of the network
 
 ## How to run
 
