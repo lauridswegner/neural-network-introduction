@@ -3,7 +3,11 @@
 **Disclaimer:**
 The implementation of the neuralNetwork is from [Tariq Rashid](https://github.com/makeyourownneuralnetwork/makeyourownneuralnetwork).
 
+***
 
+<img width="649" alt="image" src="https://github.com/lauridswegner/neural-network-introduction/assets/128291909/36fe19bf-586f-4f13-b9a5-3c41e15ec26c">
+
+***
 
 ## Explanation
 
